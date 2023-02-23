@@ -1,5 +1,3 @@
-background(255, 255, 255);
-
 //draw the rocket
 function rocket() {
   strokeWeight(3);
@@ -53,7 +51,14 @@ function spittingFire() {
   endShape();
 }
 
+let rocketY = 100;
+let gravity = 1;
+
 function draw() {
-  rocket();
+  background(255, 255, 255);
+
+  rocket(100, rocketY);
   spittingFire();
+
+  rocketY = rocketY + gravity;
 }
