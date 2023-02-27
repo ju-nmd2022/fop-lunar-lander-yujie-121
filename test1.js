@@ -39,11 +39,13 @@ function spittingFire() {
   bezierVertex(125, 210, 125, 210, 130, 190);
   endShape();
 }
-function ground() {
+function groundAndSky() {
   push();
   noStroke();
   fill(0, 128, 0);
   rect(0, 550, width, 60);
+  fill(173, 216, 230);
+  rect(0, 0, width, 550);
   pop();
 }
 function redGround() {
@@ -51,6 +53,7 @@ function redGround() {
   noStroke();
   fill(165, 42, 42);
   rect(50, 520, 150, 30);
+
   pop();
 }
 function blueGround() {
@@ -68,7 +71,7 @@ let acceleration = 0.2;
 let gameActive = true;
 function draw() {
   background(255, 255, 255);
-  ground();
+  groundAndSky();
   redGround();
   blueGround();
   rocket(rocketX, rocketY);
@@ -80,8 +83,29 @@ function draw() {
       spittingFire();
       gravity = gravity - 0.8;
     }
+    //to redGround
+    if (keyIsDown(37)) {
+      rocketX = rocketX - 2;
+    }
+    //to blueGround
+    if (keyIsDown(39)) {
+      rocketX = rocketX + 2;
+    }
   }
-  if (rocketY > 310) {
+  // judge for redGround
+  if (rocketY > 330 && rocketX > -80 && rocketX < 80) {
     gameActive = false;
   }
+  // judge for blueGround
+  if (rocketY > 330 && rocketX > 330 && rocketX < 470) {
+    gameActive = false;
+  }
+  console.log(rocketX);
+
+  if (rocketY > 360) {
+    gameActive = false;
+    if (gravity > 5) console.log("loose");
+    else console.log("win");
+  }
+  console.log(gravity);
 }
