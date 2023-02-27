@@ -7,16 +7,6 @@ function rocket(x, y) {
   // body of rocket
   fill(255, 255, 255);
   rect(100, 100, 50, 82);
-
-  //   function calculationCenter(position, size) {
-  //     return size / 2 + position;
-  //   }
-  //   const x = calculationCenter(100, 50);
-  //   const y = calculationCenter(100, 80);
-
-  // console.log(x);
-  // console.log(y);
-
   //window of rocket
   fill(95, 158, 160);
   ellipse(125, 125, 30);
@@ -52,25 +42,26 @@ function spittingFire() {
 function ground() {
   push();
   noStroke();
-  fill(125, 125, 125);
-  rect(0, 500, width, 100);
+  fill(0, 128, 0);
+  rect(0, 550, width, 60);
   pop();
 }
 function redGround() {
   push();
   noStroke();
   fill(165, 42, 42);
-  rect(50, 470, 150, 30);
+  rect(50, 520, 150, 30);
   pop();
 }
 function blueGround() {
   push();
   noStroke();
   fill(25, 25, 112);
-  rect(450, 470, 150, 30);
+  rect(450, 520, 150, 30);
   pop();
 }
 
+let rocketX = 200;
 let rocketY = -200;
 let gravity = 10;
 let acceleration = 0.2;
@@ -80,7 +71,7 @@ function draw() {
   ground();
   redGround();
   blueGround();
-  rocket(200, rocketY);
+  rocket(rocketX, rocketY);
 
   if (gameActive) {
     rocketY = rocketY + gravity;
@@ -89,8 +80,8 @@ function draw() {
       spittingFire();
       gravity = gravity - 0.8;
     }
-    if (rocketY > 310) {
-      gameActive = false;
-    }
+  }
+  if (rocketY > 310) {
+    gameActive = false;
   }
 }
