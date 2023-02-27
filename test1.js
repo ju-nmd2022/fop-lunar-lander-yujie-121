@@ -15,7 +15,7 @@ function rocket(x, y) {
   //   const y = calculationCenter(100, 80);
 
   // console.log(x);
-  //   console.log(y);
+  // console.log(y);
 
   //window of rocket
   fill(95, 158, 160);
@@ -35,12 +35,62 @@ function rocket(x, y) {
   triangle(98, 150, 80, 185, 98, 182);
   triangle(152, 150, 170, 185, 152, 182);
 }
+function spittingFire() {
+  //red fire
+  fill(255, 0, 0);
+  beginShape();
+  vertex(115, 190);
+  bezierVertex(125, 230, 125, 230, 135, 190);
+  endShape();
+  //yellow fire
+  fill(255, 165, 0);
+  beginShape();
+  vertex(120, 190);
+  bezierVertex(125, 210, 125, 210, 130, 190);
+  endShape();
+}
+function ground() {
+  push();
+  noStroke();
+  fill(125, 125, 125);
+  rect(0, 500, width, 100);
+  pop();
+}
+function redGround() {
+  push();
+  noStroke();
+  fill(165, 42, 42);
+  rect(50, 470, 150, 30);
+  pop();
+}
+function blueGround() {
+  push();
+  noStroke();
+  fill(25, 25, 112);
+  rect(450, 470, 150, 30);
+  pop();
+}
 
 let rocketY = -200;
-let gravity = 15;
+let gravity = 10;
+let acceleration = 0.2;
+let gameActive = true;
 function draw() {
   background(255, 255, 255);
-
+  ground();
+  redGround();
+  blueGround();
   rocket(200, rocketY);
-  rocketY = rocketY + gravity;
+
+  if (gameActive) {
+    rocketY = rocketY + gravity;
+    gravity = gravity + acceleration;
+    if (keyIsDown(32)) {
+      spittingFire();
+      gravity = gravity - 0.8;
+    }
+    if (rocketY > 310) {
+      gameActive = false;
+    }
+  }
 }
