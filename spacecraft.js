@@ -1,5 +1,5 @@
 //draw the rocket
-function rocket() {
+function rocket(x, y) {
   strokeWeight(3);
   //ejector
   fill(125, 125, 125);
@@ -9,11 +9,11 @@ function rocket() {
   rect(100, 100, 50, 82);
 
   //window of rocket
-  function calculationCenter(position, size) {
-    return size / 2 + position;
-  }
-  const x = calculationCenter(100, 50);
-  const y = calculationCenter(100, 80);
+  // function calculationCenter(position, size) {
+  //   return size / 2 + position;
+  // }
+  // const x = calculationCenter(100, 50);
+  // const y = calculationCenter(100, 80);
 
   // console.log(x);
   // console.log(y);
