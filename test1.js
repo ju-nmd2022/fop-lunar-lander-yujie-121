@@ -53,7 +53,6 @@ function redGround() {
   noStroke();
   fill(165, 42, 42);
   rect(50, 520, 150, 30);
-
   pop();
 }
 function blueGround() {
@@ -63,7 +62,20 @@ function blueGround() {
   rect(450, 520, 150, 30);
   pop();
 }
-
+function gameOver() {
+  fill(255, 255, 255);
+  textSize(65);
+  text("GAME OVER", -60, -200);
+  let noteText = "You can press down the Enter key to replay the game!";
+  fill(0, 0, 0);
+  textSize(16);
+  text(noteText, -55, -160);
+}
+function winPage() {
+  fill(255, 255, 255);
+  textSize(65);
+  text("YOU WIN", -20, -200);
+}
 let rocketX = 200;
 let rocketY = -200;
 let gravity = 10;
@@ -92,20 +104,31 @@ function draw() {
       rocketX = rocketX + 2;
     }
   }
+
   // judge for redGround
-  if (rocketY > 330 && rocketX > -80 && rocketX < 80) {
+  if (rocketY >= 330 && rocketX > -80 && rocketX < 75) {
     gameActive = false;
+    if (gravity > 5) gameOver();
+    else winPage();
   }
   // judge for blueGround
-  if (rocketY > 330 && rocketX > 330 && rocketX < 470) {
+  if (rocketY >= 330 && rocketX > 330 && rocketX < 470) {
     gameActive = false;
+    if (gravity > 5) gameOver();
+    else winPage();
   }
-  console.log(rocketX);
 
+  // for the grass
   if (rocketY > 360) {
     gameActive = false;
-    if (gravity > 5) console.log("loose");
-    else console.log("win");
+    if (gravity > 5) gameOver();
+    else winPage();
   }
-  console.log(gravity);
+
+  // if (rocketY > 360) {
+  //   gameActive = false;
+  //   if (gravity > 5)
+  //   console.log("loose");
+  //   else console.log("win");
+  // }
 }
