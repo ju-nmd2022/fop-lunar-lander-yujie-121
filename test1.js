@@ -52,7 +52,7 @@ function redGround() {
   push();
   noStroke();
   fill(165, 42, 42);
-  rect(50, 520, 150, 30);
+  rect(80, 500, 60, 50);
   pop();
 }
 function blueGround() {
@@ -63,19 +63,23 @@ function blueGround() {
   pop();
 }
 function gameOver() {
+  push();
+  translate(0, 0);
   fill(255, 255, 255);
   textSize(65);
-  text("GAME OVER", -60, -200);
+  text("GAME OVER", 0, -200);
   let noteText = "You can press down the Enter key to replay the game!";
   fill(0, 0, 0);
   textSize(16);
   text(noteText, -55, -160);
+  pop();
 }
 function winPage() {
   fill(255, 255, 255);
   textSize(65);
   text("YOU WIN", -20, -200);
 }
+
 let rocketX = 200;
 let rocketY = -200;
 let gravity = 10;
@@ -83,11 +87,13 @@ let acceleration = 0.2;
 let gameActive = true;
 function draw() {
   background(255, 255, 255);
+  //the scenery for game sreen
   groundAndSky();
   redGround();
   blueGround();
-  rocket(rocketX, rocketY);
 
+  //game screen
+  rocket(rocketX, rocketY);
   if (gameActive) {
     rocketY = rocketY + gravity;
     gravity = gravity + acceleration;
@@ -106,29 +112,28 @@ function draw() {
   }
 
   // judge for redGround
-  if (rocketY >= 330 && rocketX > -80 && rocketX < 75) {
+  if (rocketY >= 310 && rocketX > -45 && rocketX < 13) {
     gameActive = false;
-    if (gravity > 5) gameOver();
-    else winPage();
+    if (gravity > 8) console.log("loose");
+    else console.log("win");
   }
   // judge for blueGround
   if (rocketY >= 330 && rocketX > 330 && rocketX < 470) {
     gameActive = false;
-    if (gravity > 5) gameOver();
-    else winPage();
+    if (gravity > 5) console.log("loose");
+    else console.log("win");
   }
 
   // for the grass
   if (rocketY > 360) {
     gameActive = false;
-    if (gravity > 5) gameOver();
-    else winPage();
+    if (gravity > 5) console.log("loose");
+    else console.log("win");
   }
 
-  // if (rocketY > 360) {
-  //   gameActive = false;
-  //   if (gravity > 5)
-  //   console.log("loose");
-  //   else console.log("win");
-  // }
+  if (rocketY > 360) {
+    gameActive = false;
+    if (gravity > 5) console.log("loose");
+    else console.log("win");
+  }
 }
