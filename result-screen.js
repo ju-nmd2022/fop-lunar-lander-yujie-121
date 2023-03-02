@@ -66,12 +66,12 @@ function reStartButton() {
 }
 
 function draw() {
-  //   background(255, 255, 255);
-  background(173, 216, 230);
-  gameOver();
+  background(255, 255, 255);
+  // background(173, 216, 230);
+  // gameOver();
   // winPageForRedGround();
   //   winPageForBlueGround();
-  //   reStartButton();
+  reStartButton();
 }
 function mouseClicked() {
   if (mouseX > 217 && mouseX < 217 + 205 && mouseY > 250 && mouseY < 250 + 70) {
