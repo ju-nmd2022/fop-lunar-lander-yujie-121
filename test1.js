@@ -122,9 +122,17 @@ function draw() {
   groundAndSky();
   redGround();
   blueGround();
-
   //game screen
   rocket(rocketX, rocketY);
+
+  if (keyIsDown(13)) {
+    gameActive = true;
+    rocketX = 200;
+    rocketY = -200;
+    gravity = 10;
+    acceleration = 0.2;
+  }
+
   if (gameActive) {
     rocketY = rocketY + gravity;
     gravity = gravity + acceleration;
