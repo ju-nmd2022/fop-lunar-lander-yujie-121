@@ -64,20 +64,51 @@ function blueGround() {
 }
 function gameOver() {
   push();
-  translate(0, 0);
+  resetMatrix(); // resets the origin of the coordinate system to (0,0)
   fill(255, 255, 255);
   textSize(65);
-  text("GAME OVER", 0, -200);
+  text("GAME OVER", 150, 200);
   let noteText = "You can press down the Enter key to replay the game!";
-  fill(0, 0, 0);
+  fill(47, 79, 79);
   textSize(16);
-  text(noteText, -55, -160);
+  text(noteText, 160, 250);
   pop();
 }
-function winPage() {
+function winPageForRedGround() {
+  push();
+  resetMatrix();
   fill(255, 255, 255);
   textSize(65);
-  text("YOU WIN", -20, -200);
+  text("YOU WIN", 200, 200);
+  let hardModeText = "WIN THE HARD MODE";
+  fill(165, 42, 42);
+  textSize(26);
+  text(hardModeText, 210, 250);
+  pop();
+}
+function winPageForBlueGround() {
+  push();
+  resetMatrix();
+  fill(255, 255, 255);
+  textSize(65);
+  text("YOU WIN", 200, 200);
+  let hardModeText = "WIN THE EASY MODE";
+  fill(25, 25, 112);
+  textSize(26);
+  text(hardModeText, 210, 250);
+  pop();
+}
+function winPageForGrass() {
+  push();
+  resetMatrix();
+  fill(255, 255, 255);
+  textSize(65);
+  text("YOU WIN", 200, 200);
+  let noteText = "You can press the Enter key to try other landing ground!";
+  fill(47, 79, 79);
+  textSize(16);
+  text(noteText, 160, 250);
+  pop();
 }
 
 let rocketX = 200;
@@ -111,29 +142,23 @@ function draw() {
     }
   }
 
-  // judge for redGround
-  if (rocketY >= 310 && rocketX > -45 && rocketX < 13) {
+  // judgement for redGround
+  if (rocketY >= 310 && rocketY < 315 && rocketX > -45 && rocketX < 13) {
     gameActive = false;
-    if (gravity > 8) console.log("loose");
-    else console.log("win");
+    if (gravity > 7) gameOver();
+    else winPageForRedGround();
   }
-  // judge for blueGround
-  if (rocketY >= 330 && rocketX > 330 && rocketX < 470) {
+  // judgement for blueGround
+  if (rocketY >= 330 && rocketY < 335 && rocketX > 330 && rocketX < 470) {
     gameActive = false;
-    if (gravity > 5) console.log("loose");
-    else console.log("win");
+    if (gravity > 7) gameOver();
+    else winPageForBlueGround();
   }
 
   // for the grass
   if (rocketY > 360) {
     gameActive = false;
-    if (gravity > 5) console.log("loose");
-    else console.log("win");
-  }
-
-  if (rocketY > 360) {
-    gameActive = false;
-    if (gravity > 5) console.log("loose");
-    else console.log("win");
+    if (gravity > 5) gameOver();
+    else winPageForGrass();
   }
 }
