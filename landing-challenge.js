@@ -68,10 +68,6 @@ function gameOver() {
   fill(255, 255, 255);
   textSize(65);
   text("GAME OVER", 150, 200);
-  let noteText = "You can press down the Enter key to replay the game!";
-  fill(47, 79, 79);
-  textSize(16);
-  text(noteText, 160, 250);
   pop();
 }
 function winPageForRedGround() {
@@ -80,7 +76,7 @@ function winPageForRedGround() {
   fill(255, 255, 255);
   textSize(65);
   text("YOU WIN", 200, 200);
-  let hardModeText = "WIN THE HARD MODE";
+  let hardModeText = "WIN THE HARD MODE!";
   fill(165, 42, 42);
   textSize(26);
   text(hardModeText, 210, 250);
@@ -92,7 +88,7 @@ function winPageForBlueGround() {
   fill(255, 255, 255);
   textSize(65);
   text("YOU WIN", 200, 200);
-  let hardModeText = "WIN THE EASY MODE";
+  let hardModeText = "WIN THE EASY MODE!";
   fill(25, 25, 112);
   textSize(26);
   text(hardModeText, 210, 250);
@@ -104,7 +100,7 @@ function winPageForGrass() {
   fill(255, 255, 255);
   textSize(65);
   text("YOU WIN", 200, 200);
-  let noteText = "You can press the Enter key to try other landing ground!";
+  let noteText = "You can click button to try landing to other ground!";
   fill(47, 79, 79);
   textSize(16);
   text(noteText, 160, 250);
@@ -212,7 +208,6 @@ function draw() {
         rocketX = rocketX + 2;
       }
     }
-
     // judgement for redGround
     if (rocketY >= 310 && rocketY < 315 && rocketX > -45 && rocketX < 13) {
       gameActive = false;
@@ -233,14 +228,13 @@ function draw() {
       gameActive = false;
       if (gravity > 5) gameOver();
       else winPageForGrass();
-      // enter key to re-start
-      if (keyIsDown(13)) {
-        gameActive = true;
-        rocketX = 200;
-        rocketY = -200;
-        gravity = 10;
-        acceleration = 0.2;
-      }
+      reStartButton();
     }
+  }
+  // for if rocket over sreen
+  if (rocketY < -200) {
+    gameActive = false;
+    gameOver();
+    reStartButton();
   }
 }
