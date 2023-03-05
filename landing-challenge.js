@@ -215,6 +215,7 @@ function draw() {
       else winPageForRedGround();
       reStartButton();
     }
+
     // judgement for blueGround
     if (rocketY >= 330 && rocketY < 335 && rocketX > 330 && rocketX < 470) {
       gameActive = false;
@@ -223,18 +224,24 @@ function draw() {
       reStartButton();
     }
 
-    // for the grass
-    if (rocketY > 360) {
+    // for the middle grass
+    if (rocketY > 360 && rocketX > 13 && rocketX < 330) {
       gameActive = false;
       if (gravity > 5) gameOver();
       else winPageForGrass();
       reStartButton();
     }
-  }
-  // for if rocket over sreen
-  if (rocketY < -200) {
-    gameActive = false;
-    gameOver();
-    reStartButton();
+    // for other judement for the grass
+    if ((rocketX < -47 && rocketY > 360) || (rocketX > 470 && rocketY > 360)) {
+      gameActive = false;
+      gameOver();
+      reStartButton();
+    }
+    // for if rocket over sreen
+    if (rocketY < -200) {
+      gameActive = false;
+      gameOver();
+      reStartButton();
+    }
   }
 }
