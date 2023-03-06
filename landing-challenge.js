@@ -1,3 +1,7 @@
+function setup() {
+  createCanvas(700, 620);
+  frameRate(30);
+}
 function rocket(x, y) {
   translate(x, y);
   strokeWeight(3);
