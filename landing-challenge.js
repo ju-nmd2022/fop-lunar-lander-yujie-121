@@ -145,7 +145,7 @@ function startButton() {
   let startText = "Click start";
   fill(255, 255, 255);
   textSize(38);
-  text(startText, 234, 400);
+  text(startText, 227, 400);
   pop();
 }
 function mouseClicked() {
@@ -172,7 +172,7 @@ function reStartButton() {
   let startText = "Play again";
   fill(255, 255, 255);
   textSize(38);
-  text(startText, 260, 340);
+  text(startText, 255, 340);
   pop();
 }
 
@@ -185,7 +185,7 @@ let gameActive = true;
 let state = "start";
 
 function draw() {
-  background(255, 255, 255);
+  background(212, 242, 231);
 
   if (state === "start") {
     startScreen();
