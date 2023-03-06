@@ -106,6 +106,7 @@ function winPageForGrass() {
   text(noteText, 160, 250);
   pop();
 }
+
 function startScreen() {
   push();
   translate(0, 0);
@@ -209,15 +210,16 @@ function draw() {
       }
     }
     // judgement for redGround
-    if (rocketY >= 310 && rocketY < 315 && rocketX > -45 && rocketX < 13) {
+    if (rocketY >= 310 && rocketY <= 315 && rocketX > -45 && rocketX < 13) {
       gameActive = false;
-      if (gravity > 7) gameOver();
+      if (gravity > 7 || (rocketY > 315 && rocketX > -45 && rocketX < 13))
+        gameOver();
       else winPageForRedGround();
       reStartButton();
     }
 
     // judgement for blueGround
-    if (rocketY >= 330 && rocketY < 335 && rocketX > 330 && rocketX < 470) {
+    if (rocketY >= 330 && rocketY <= 335 && rocketX > 330 && rocketX < 470) {
       gameActive = false;
       if (gravity > 7) gameOver();
       else winPageForBlueGround();
@@ -225,18 +227,26 @@ function draw() {
     }
 
     // for the middle grass
-    if (rocketY > 360 && rocketX > 13 && rocketX < 330) {
+    if (rocketY > 360) {
       gameActive = false;
       if (gravity > 5) gameOver();
       else winPageForGrass();
       reStartButton();
+      // the jugement for other middle grass
+      if ((rocketX > 13 && rocketX < 200) || (rocketX > 200 && rocketX < 330)) {
+        gameActive = false;
+        gameOver();
+        reStartButton();
+      }
     }
+
     // for other judement for the grass
     if ((rocketX < -47 && rocketY > 360) || (rocketX > 470 && rocketY > 360)) {
       gameActive = false;
       gameOver();
       reStartButton();
     }
+
     // for if rocket over sreen
     if (rocketY < -200) {
       gameActive = false;
