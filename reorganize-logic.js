@@ -1,7 +1,3 @@
-function setup() {
-  createCanvas(700, 620);
-  frameRate(30);
-}
 function rocket(x, y) {
   translate(x, y);
   strokeWeight(3);
@@ -52,50 +48,12 @@ function groundAndSky() {
   rect(0, 0, width, 550);
   pop();
 }
-function redGround() {
-  push();
-  noStroke();
-  fill(165, 42, 42);
-  rect(80, 500, 60, 50);
-  pop();
-}
-function blueGround() {
-  push();
-  noStroke();
-  fill(25, 25, 112);
-  rect(450, 520, 150, 30);
-  pop();
-}
 function gameOver() {
   push();
-  resetMatrix(); // resets the origin of the coordinate system to (0,0)
-  fill(255, 255, 255);
+  translate(0, 0);
+  fill(47, 79, 79);
   textSize(65);
   text("GAME OVER", 150, 200);
-  pop();
-}
-function winPageForRedGround() {
-  push();
-  resetMatrix();
-  fill(255, 255, 255);
-  textSize(65);
-  text("YOU WIN", 200, 200);
-  let hardModeText = "WIN THE HARD MODE!";
-  fill(165, 42, 42);
-  textSize(26);
-  text(hardModeText, 210, 250);
-  pop();
-}
-function winPageForBlueGround() {
-  push();
-  resetMatrix();
-  fill(255, 255, 255);
-  textSize(65);
-  text("YOU WIN", 200, 200);
-  let hardModeText = "WIN THE EASY MODE!";
-  fill(25, 25, 112);
-  textSize(26);
-  text(hardModeText, 210, 250);
   pop();
 }
 function winPageForGrass() {
@@ -110,7 +68,21 @@ function winPageForGrass() {
   text(noteText, 160, 250);
   pop();
 }
-
+function reStartButton() {
+  push();
+  resetMatrix();
+  strokeWeight(3);
+  push();
+  stroke(119, 136, 153);
+  fill(176, 196, 222);
+  rect(243, 290, 205, 70, 30);
+  pop();
+  let startText = "Play again";
+  fill(255, 255, 255);
+  textSize(38);
+  text(startText, 255, 340);
+  pop();
+}
 function startScreen() {
   push();
   translate(0, 0);
@@ -153,6 +125,7 @@ function mouseClicked() {
     state = "game";
   }
   if (mouseX > 243 && mouseX < 243 + 205 && mouseY > 290 && mouseY < 290 + 70) {
+    state = "game";
     gameActive = true;
     rocketX = 200;
     rocketY = -200;
@@ -160,43 +133,23 @@ function mouseClicked() {
     acceleration = 0.2;
   }
 }
-function reStartButton() {
-  push();
-  resetMatrix();
-  strokeWeight(3);
-  push();
-  stroke(119, 136, 153);
-  fill(176, 196, 222);
-  rect(243, 290, 205, 70, 30);
-  pop();
-  let startText = "Play again";
-  fill(255, 255, 255);
-  textSize(38);
-  text(startText, 255, 340);
-  pop();
-}
-
+let state = "start";
 let rocketX = 200;
 let rocketY = -200;
 let gravity = 10;
 let acceleration = 0.2;
 let gameActive = true;
 
-let state = "start";
-
 function draw() {
   background(212, 242, 231);
 
+  //Overrall logic
   if (state === "start") {
     startScreen();
     startButton();
   } else if (state === "game") {
-    //game screen
     groundAndSky();
-    redGround();
-    blueGround();
     rocket(rocketX, rocketY);
-
     if (gameActive) {
       rocketY = rocketY + gravity;
       gravity = gravity + acceleration;
@@ -204,57 +157,16 @@ function draw() {
         spittingFire();
         gravity = gravity - 0.8;
       }
-      //to redGround
-      if (keyIsDown(37)) {
-        rocketX = rocketX - 2;
-      }
-      //to blueGround
-      if (keyIsDown(39)) {
-        rocketX = rocketX + 2;
-      }
     }
-    // judgement for redGround
-    if (rocketY >= 310 && rocketY <= 315 && rocketX > -45 && rocketX < 13) {
-      gameActive = false;
-      if (gravity > 5) state = "result";
-      else winPageForRedGround();
-      reStartButton();
-    }
-
-    // judgement for blueGround
-    if (rocketY >= 330 && rocketY <= 335 && rocketX > 330 && rocketX < 470) {
-      gameActive = false;
-      if (gravity > 5) state = "result";
-      else winPageForBlueGround();
-      reStartButton();
-    }
-
-    // for the middle grass
+    //judgement for the grass
     if (rocketY > 360) {
       gameActive = false;
-      if (gravity > 5) gameOver();
-      else winPageForGrass();
-      reStartButton();
-      // the jugement for other middle grass
-      if ((rocketX > 13 && rocketX < 200) || (rocketX > 200 && rocketX < 330)) {
-        gameActive = false;
-        gameOver();
+      if (gravity > 5) {
+        state = "result";
+      } else {
+        winPageForGrass();
         reStartButton();
       }
-    }
-
-    // for other judement for the grass
-    if ((rocketX < -47 && rocketY > 360) || (rocketX > 470 && rocketY > 360)) {
-      gameActive = false;
-      gameOver();
-      reStartButton();
-    }
-
-    // for if rocket over sreen
-    if (rocketY < -200) {
-      gameActive = false;
-      gameOver();
-      reStartButton();
     }
   } else if (state === "result") {
     gameOver();
