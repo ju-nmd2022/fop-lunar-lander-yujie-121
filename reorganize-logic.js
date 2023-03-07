@@ -39,13 +39,51 @@ function spittingFire() {
   bezierVertex(125, 210, 125, 210, 130, 190);
   endShape();
 }
-function groundAndSky() {
+function groundsAndSky() {
   push();
   noStroke();
+  //grass
   fill(0, 128, 0);
   rect(0, 550, width, 60);
+  //sky
   fill(173, 216, 230);
   rect(0, 0, width, 550);
+  pop();
+  //red ground
+  push();
+  noStroke();
+  fill(165, 42, 42);
+  rect(80, 500, 60, 50);
+  pop();
+  //blue ground
+  push();
+  noStroke();
+  fill(25, 25, 112);
+  rect(450, 520, 150, 30);
+  pop();
+}
+function winPageForRedGround() {
+  push();
+  resetMatrix();
+  fill(255, 255, 255);
+  textSize(65);
+  text("YOU WIN", 200, 200);
+  let hardModeText = "WIN THE HARD MODE!";
+  fill(165, 42, 42);
+  textSize(26);
+  text(hardModeText, 210, 250);
+  pop();
+}
+function winPageForBlueGround() {
+  push();
+  resetMatrix();
+  fill(255, 255, 255);
+  textSize(65);
+  text("YOU WIN", 200, 200);
+  let hardModeText = "WIN THE EASY MODE!";
+  fill(25, 25, 112);
+  textSize(26);
+  text(hardModeText, 210, 250);
   pop();
 }
 function gameOver() {
@@ -133,10 +171,11 @@ function mouseClicked() {
     acceleration = 0.2;
   }
 }
+
 let state = "start";
 let rocketX = 200;
 let rocketY = -200;
-let gravity = 10;
+let gravity = 8;
 let acceleration = 0.2;
 let gameActive = true;
 
@@ -148,7 +187,7 @@ function draw() {
     startScreen();
     startButton();
   } else if (state === "game") {
-    groundAndSky();
+    groundsAndSky();
     rocket(rocketX, rocketY);
     if (gameActive) {
       rocketY = rocketY + gravity;
@@ -157,9 +196,17 @@ function draw() {
         spittingFire();
         gravity = gravity - 0.8;
       }
+      //to redGround
+      if (keyIsDown(37)) {
+        rocketX = rocketX - 2;
+      }
+      //to blueGround
+      if (keyIsDown(39)) {
+        rocketX = rocketX + 2;
+      }
     }
     //judgement for the grass
-    if (rocketY > 360) {
+    if (rocketY > 360 && rocketX === 200) {
       gameActive = false;
       if (gravity > 5) {
         state = "result";
@@ -167,6 +214,42 @@ function draw() {
         winPageForGrass();
         reStartButton();
       }
+    }
+    // for if rocket over sreen
+    if (rocketY < -200) {
+      state = "result";
+    }
+    // judgement for redGround
+    if (rocketY >= 310 && rocketY < 360 && rocketX > -45 && rocketX < 13) {
+      gameActive = false;
+      if (gravity > 5) state = "result";
+      else winPageForRedGround();
+      reStartButton();
+    }
+    // judgement for blueGround
+    if (rocketY >= 330 && rocketY < 360 && rocketX > 330 && rocketX < 470) {
+      gameActive = false;
+      if (gravity > 5) {
+        state = "result";
+      } else winPageForBlueGround();
+      reStartButton();
+    }
+    // for other judement for the grass
+    if (
+      (rocketX < -47 && rocketY > 360) ||
+      (rocketX > 470 && rocketY > 360) ||
+      (rocketY > 315 && rocketY < 360 && rocketX > -45 && rocketX < 13) ||
+      (rocketY > 335 && rocketY < 360 && rocketX > 330 && rocketX < 470)
+    ) {
+      state = "result";
+    }
+
+    // the jugement for other middle grass
+    if (
+      (rocketX > 13 && rocketX < 200 && rocketY > 360) ||
+      (rocketX > 200 && rocketX < 330 && rocketY > 360)
+    ) {
+      state = "result";
     }
   } else if (state === "result") {
     gameOver();
